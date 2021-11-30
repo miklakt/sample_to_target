@@ -4,7 +4,7 @@ import scipy.stats
 import numpy as np
 import time
 import logging
-logger = logging.getLogger("sample_to_target_error")
+logger = logging.getLogger("sample_to_target")
 
 def get_tau(x, acf_n_lags : int = 200):
     """Get the integrated autocorrelation time i.e. the distance between measurements
@@ -75,9 +75,9 @@ def sample_to_target_error(
         initial_sample_size = 100,
         tau = None,
         ci = 0.95):
-    """The routine sample an autocorrelated observable till one of the exit loop criterion meat.
-    Possible criteria sampling time, sampling margins of error and sample size.
-    The routine calculate mean value and margins of error in interations
+    """The routine samples an autocorrelated observable till one of the exit loop criterion met.
+    Possible criteria are sampling timeout, the margins of error and sample size.
+    The routine calculates mean value and the margins of error in interations
     with ever increasing precision, in the next steps:
         1) get initial sample
         2) calculate autocorr time if not provided
@@ -88,7 +88,7 @@ def sample_to_target_error(
             7) check end loop
         8) returns mean, margin of errors, sample size
 
-    Note using autocorr time to calculate effective sample size.
+    We use autocorr time tau to calculate effective sample size.
     ----------------------------------------------------------------------------
     Requirements to callback function:
     use a function of the next signature f(n) -> List[float],
