@@ -67,7 +67,7 @@ def correlated_data_mean_err(x, tau, ci = 0.95):
     #print(f"mean: {x_mean};  error: {err}")
     return x_mean, err
 
-def sample_to_target_error(
+def sample_to_target(
         get_data_callback,
         target_error = None,
         target_eff_sample_size = None,
