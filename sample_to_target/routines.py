@@ -17,8 +17,14 @@ def get_tau(x, acf_n_lags : int = 200):
     Returns:
         float: integrated autocorrelation time
     """
+    #References:
+    #https://www.physik.uni-leipzig.de/~janke/Paper/nic10_423_2002.pdf
+    #https://dfm.io/posts/autocorr/
     acf_arr = acf(x, nlags = acf_n_lags)
     #integrated autocorrelation time
+    #ideally integral of acf monotonically approaches some value
+    #though due to calculations errors it does not hold
+    #for that reason we use max(np.cumsum(acf_arr)) instead of simple sum(acf_arr)
     tau_int =1/2+max(np.cumsum(acf_arr))
     return tau_int
 
