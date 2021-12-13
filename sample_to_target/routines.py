@@ -143,8 +143,7 @@ def sample_to_target(
     #sampling loop
     while True:
         #time passed
-        logger.info(f'Criteria are not reached')
-        logger.info('More data will be collected')
+        logger.debug(f'Criteria are not reached')
         #append new sample (correlated)
         new_sample = get_data_callback(n_samples)
         x=np.append(x, new_sample)
@@ -156,12 +155,16 @@ def sample_to_target(
         x_mean, x_err = correlated_data_mean_err(x, tau, ci)
         n_samples_eff = n_samples/(2*tau)
         elapsed_time = time.time() - start_time
-        logger.info((x_err, n_samples_eff, elapsed_time))
+        logger.debug((x_err, n_samples_eff, elapsed_time))
         #stop sampling?
         if end_loop(elapsed_time, x_err, n_samples_eff):
             break
     #Done
-    logger.info(f'Mean: {x_mean}, err: {x_err}, eff_sample_size: {n_samples/(2*tau)}')
+    logger.info(
+        f"Mean: {x_mean}, margin of error: {x_err},\n" +\
+        f"  sample size: {n_samples}, eff_sample_size: {n_samples/(2*tau)},\n" +\
+        f"  elapsed time: {elapsed_time}"
+        )
     return x_mean, x_err, n_samples/(2*tau)
 
 #for highly autocorrelated data consider using downsampling prior to sample_to_target routine
