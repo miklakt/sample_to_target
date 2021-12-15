@@ -28,6 +28,8 @@ def get_tau(x, acf_n_lags : int = 200):
     tau_int =1/2+max(np.cumsum(acf_arr))
     return tau_int
 
+get_tau_2d = np.vectorize(get_tau, signature='(n)->()', excluded=['acf_n_lags'])
+
 def correlated_data_mean_err(x, tau, ci = 0.95):
     """Returns the mean and the confidence interval of correlated sample.
     That distribution mean lies in sample mean +/- error with a probability of
